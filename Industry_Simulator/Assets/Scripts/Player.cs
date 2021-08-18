@@ -22,17 +22,18 @@ public class Player : MonoBehaviour {
     #endregion
     
     private Camera mainCam;
+    private string gameStudioName = "COOL STUDIO!";
     private string currentMilestone = "Planning";
     // Resources
     private int money = 0;
     private int code = 0;
     private int design = 0;
+    private int team = 0;
     // Camera settings
     private float camVel = 0.5f;
     private int zoomBounds = 5;
     private float zoomRate = 4.0f;
     private Vector2 mousePos = Vector2.zero;
-    [SerializeField] GameObject hud;
 
     private void Start() {
         mainCam = Camera.main;
@@ -42,7 +43,14 @@ public class Player : MonoBehaviour {
         #region Player movement
         // If the player is off the desk
         if (ProjectManager.Instance.GetIfOnDesk() == false) {
-            hud.SetActive(false);
+
+
+
+            // BUG: This is being called every frame, only make it do it one time
+
+
+            
+            UiManager.Instance.HideHUD();
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Input.GetMouseButtonDown(1)) {
@@ -55,7 +63,7 @@ public class Player : MonoBehaviour {
             }
             // If the player is seated
         } else {
-            hud.SetActive(true);
+            UiManager.Instance.ShowHUD();
             if (Input.GetKey(KeyCode.W)) {
                 //Move Up
                 MoveCamera("up");
@@ -118,5 +126,17 @@ public class Player : MonoBehaviour {
 
     public void SetCurrentMilestone(string newMilestone) {
         currentMilestone = newMilestone;
+    }
+
+    public int GetTeamSize() {
+        return team;
+    }
+
+    public string GetGameStudioName() {
+        return gameStudioName;
+    }
+    
+    public void SetGameStudioName(string newName) {
+        gameStudioName = newName;
     }
 }

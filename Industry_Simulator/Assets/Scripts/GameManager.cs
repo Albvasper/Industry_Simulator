@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -21,17 +22,7 @@ public class GameManager : MonoBehaviour {
         }
     #endregion
 
-    private string gameStudioName = "COOL STUDIO!";
-
-    private void Start() {
-        GameProject.Instance.InitProjectCreation();
-    }
-
-    private void Update() {
-        
-    }
-
-    public string GetGameStudioName() {
-        return gameStudioName;
-    }
+    private int currentDay = 0;
+    private int currentYear = 0;
+    
 }

@@ -39,8 +39,7 @@ public class GameProject : MonoBehaviour {
     [SerializeField] private Button threeDGraphicsButton;
 
     private void Start() {
-        createProjectPanel.SetActive(false);
-        gameStudioNameText.text = GameManager.Instance.GetGameStudioName();
+        gameStudioNameText.text = Player.Instance.GetGameStudioName();
     }
 
     public void InitProjectCreation() {
