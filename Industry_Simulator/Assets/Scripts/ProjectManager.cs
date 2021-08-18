@@ -36,10 +36,12 @@ public class ProjectManager : Employee {
     }
 
     public void SitOnDesk() {
+        UiManager.Instance.ShowHUD();
         onDesk = true;
     }
 
     public void GetOffDesk() {
+        UiManager.Instance.HideHUD();
         onDesk = false;
     }
 }

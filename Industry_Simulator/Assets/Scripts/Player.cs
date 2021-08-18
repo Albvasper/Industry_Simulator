@@ -43,14 +43,6 @@ public class Player : MonoBehaviour {
         #region Player movement
         // If the player is off the desk
         if (ProjectManager.Instance.GetIfOnDesk() == false) {
-
-
-
-            // BUG: This is being called every frame, only make it do it one time
-
-
-            
-            UiManager.Instance.HideHUD();
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Input.GetMouseButtonDown(1)) {
@@ -63,7 +55,6 @@ public class Player : MonoBehaviour {
             }
             // If the player is seated
         } else {
-            UiManager.Instance.ShowHUD();
             if (Input.GetKey(KeyCode.W)) {
                 //Move Up
                 MoveCamera("up");

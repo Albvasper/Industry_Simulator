@@ -31,6 +31,9 @@ public class UiManager : MonoBehaviour {
     [SerializeField] private Text dateText;
     [SerializeField] private Text teamSizeText;
     [SerializeField] private Button buildButton;
+    // Main Window Panel
+    [Header("Main Window Panel")]
+    [SerializeField] private GameObject mainWindow;
     // Building system UI
     [Header("Building system UI")]
     [SerializeField] private GameObject buildPanel;
@@ -55,10 +58,12 @@ public class UiManager : MonoBehaviour {
     [SerializeField] private GameObject teamArtPanel;
     [SerializeField] private GameObject teamMarketingPanel;
     [SerializeField] private GameObject teamQAPanel;
+    // WorkOS Panel
+    [Header("WorkOS panel")]
+    [SerializeField] private GameObject workOSPanel;
 
     private void Start() {
-        GameProject.Instance.InitProjectCreation();
-        buildPanel.SetActive(false);
+        HideHUD();
     }
 
     private void Update() {
@@ -70,77 +75,30 @@ public class UiManager : MonoBehaviour {
         //dateText.text = 
     }
 
-    public void ShowBuildPanel() {
+    public void ShowMainWindow() {
+        mainWindow.SetActive(true);
         HideHUD();
-        buildPanel.SetActive(true);
-        mainBuildCategory1Panel.SetActive(true);
-        buildCategory1Panel.SetActive(false);
-        buildCategory2Panel.SetActive(false);
-        buildCategory3Panel.SetActive(false);
     }
 
-    public void CloseBuildPanel() {
+    public void CloseMainWindow() {
+        mainWindow.SetActive(false);
         ShowHUD();
-        buildPanel.SetActive(false);
-    }
-
-    public void ShowBuildPanel1() {
-        mainBuildCategory1Panel.SetActive(false);
-        buildCategory1Panel.SetActive(true);
-        buildCategory2Panel.SetActive(false);
-        buildCategory3Panel.SetActive(false);
-    }
-
-    public void ShowBuildPanel2() {
-        mainBuildCategory1Panel.SetActive(false);
-        buildCategory1Panel.SetActive(false);
-        buildCategory2Panel.SetActive(true);
-        buildCategory3Panel.SetActive(false);
-    }
-
-    public void ShowBuildPanel3() {
-        mainBuildCategory1Panel.SetActive(false);
-        buildCategory1Panel.SetActive(false);
-        buildCategory2Panel.SetActive(false);
-        buildCategory3Panel.SetActive(true);
     }
 
     public void ShowProjectInfoPanel() {
+        ShowMainWindow();
         projectInfoPanel.SetActive(true);
-        HideHUD();
-    }
-
-    public void CloseProjectInfoPanel() {
-        projectInfoPanel.SetActive(false);
-        ShowHUD();
-    }
-
-    public void ShowHUD() {
-        hudPanel.SetActive(true);
-    }
-    
-    public void HideHUD() {
-        hudPanel.SetActive(false);
-    }
-
-    public void ShowMilestonePanel() {
-        milestonePanel.SetActive(true);
-        milestoneSummaryScreen.SetActive(true);
-        milestoneMangementScreen.SetActive(false);
-    }
-
-    public void ShowMilestoneManagementPanel() {
-        milestonePanel.SetActive(true);
-        milestoneSummaryScreen.SetActive(false);
-        milestoneMangementScreen.SetActive(true);
-    }
-
-    public void HideMilestonePanel() {
-        milestonePanel.SetActive(false);
+        teamPanel.SetActive(false);
+        workOSPanel.SetActive(false);
+        buildPanel.SetActive(false);
     }
 
     public void ShowTeamPanel() {
+        ShowMainWindow();
+        projectInfoPanel.SetActive(false);
         teamPanel.SetActive(true);
+        workOSPanel.SetActive(false);
+        buildPanel.SetActive(false);
         teamMainPanel.SetActive(true);
         teamDevPanel.SetActive(false);
         teamDesignPanel.SetActive(false);
@@ -194,7 +152,68 @@ public class UiManager : MonoBehaviour {
         teamQAPanel.SetActive(true);
     }
 
-    public void HideTeamPanel() {
+    public void ShowWorkOSPanel() {
+        ShowMainWindow();
+        projectInfoPanel.SetActive(false);
         teamPanel.SetActive(false);
+        workOSPanel.SetActive(true);
+        buildPanel.SetActive(false);
+    }
+
+    public void ShowBuildPanel() {
+        ShowMainWindow();
+        projectInfoPanel.SetActive(false);
+        teamPanel.SetActive(false);
+        workOSPanel.SetActive(false);
+        buildPanel.SetActive(true);
+        mainBuildCategory1Panel.SetActive(true);
+        buildCategory1Panel.SetActive(false);
+        buildCategory2Panel.SetActive(false);
+        buildCategory3Panel.SetActive(false);
+    }
+
+    public void ShowBuildPanel1() {
+        mainBuildCategory1Panel.SetActive(false);
+        buildCategory1Panel.SetActive(true);
+        buildCategory2Panel.SetActive(false);
+        buildCategory3Panel.SetActive(false);
+    }
+
+    public void ShowBuildPanel2() {
+        mainBuildCategory1Panel.SetActive(false);
+        buildCategory1Panel.SetActive(false);
+        buildCategory2Panel.SetActive(true);
+        buildCategory3Panel.SetActive(false);
+    }
+
+    public void ShowBuildPanel3() {
+        mainBuildCategory1Panel.SetActive(false);
+        buildCategory1Panel.SetActive(false);
+        buildCategory2Panel.SetActive(false);
+        buildCategory3Panel.SetActive(true);
+    }
+
+    public void ShowMilestonePanel() {
+        milestonePanel.SetActive(true);
+        milestoneSummaryScreen.SetActive(true);
+        milestoneMangementScreen.SetActive(false);
+    }
+
+    public void ShowMilestoneManagementPanel() {
+        milestonePanel.SetActive(true);
+        milestoneSummaryScreen.SetActive(false);
+        milestoneMangementScreen.SetActive(true);
+    }
+
+    public void HideMilestonePanel() {
+        milestonePanel.SetActive(false);
+    }
+
+    public void ShowHUD() {
+        hudPanel.SetActive(true);
+    }
+    
+    public void HideHUD() {
+        hudPanel.SetActive(false);
     }
 }

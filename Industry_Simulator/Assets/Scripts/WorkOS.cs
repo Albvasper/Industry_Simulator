@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour {
+public class WorkOS : MonoBehaviour {
 
     #region Singleton Pattern
-        private static GameManager instance;
-        public static GameManager Instance { 
+        private static WorkOS instance;
+        public static WorkOS Instance { 
             get { 
                 return instance; 
             } 
@@ -22,11 +21,7 @@ public class GameManager : MonoBehaviour {
         }
     #endregion
 
-    private int currentDay = 0;
-    private int currentYear = 0;
-    
+    private void SendMessageToTeam() {
 
-    private void Start() {
-        GameProject.Instance.InitProjectCreation();
     }
 }
