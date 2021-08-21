@@ -20,7 +20,8 @@ public class BuildingManager : MonoBehaviour {
             }
         }
     #endregion
-
+    
+    private ObjectPooler objectPooler;
     private GameObject placeableObj;
     private GameObject placeableObjPreview;
     private Vector3 offset;
@@ -34,6 +35,7 @@ public class BuildingManager : MonoBehaviour {
         mainCam = Camera.main;
         initBuilding = false;
         building = false;
+        objectPooler = ObjectPooler.Instance;
     }
 
     private void Update() {
@@ -66,7 +68,7 @@ public class BuildingManager : MonoBehaviour {
     public void BuildStructure() {
         if (initBuilding == true) {
             if (placeableObj == null) {
-                placeableObj = Instantiate(placeableObjPreview);
+                placeableObj = objectPooler.SpawnFromPool("Floor", new Vector3(0, 0, 0), Quaternion.identity);
                 placeableObj.layer = 2;
             }
         }

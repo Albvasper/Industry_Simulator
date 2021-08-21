@@ -61,6 +61,8 @@ public class UiManager : MonoBehaviour {
     // WorkOS Panel
     [Header("WorkOS panel")]
     [SerializeField] private GameObject workOSPanel;
+    [SerializeField] private GameObject workOSinboxPanel;
+    [SerializeField] private GameObject workOSprojectsPanel;
 
     private void Start() {
         HideHUD();
@@ -158,6 +160,18 @@ public class UiManager : MonoBehaviour {
         teamPanel.SetActive(false);
         workOSPanel.SetActive(true);
         buildPanel.SetActive(false);
+        workOSprojectsPanel.SetActive(false);
+        workOSinboxPanel.SetActive(false);
+    }
+
+    public void ShowInboxPanel() {
+        workOSprojectsPanel.SetActive(false);
+        workOSinboxPanel.SetActive(true);
+    }
+
+    public void ShowProjectsPanel() {
+        workOSprojectsPanel.SetActive(true);
+        workOSinboxPanel.SetActive(false);
     }
 
     public void ShowBuildPanel() {
@@ -216,4 +230,5 @@ public class UiManager : MonoBehaviour {
     public void HideHUD() {
         hudPanel.SetActive(false);
     }
+
 }
