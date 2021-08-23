@@ -23,12 +23,19 @@ public class ShopManager : MonoBehaviour {
 
     private ObjectPooler objectPooler;
     private BuildingManager buildingManager;
+    private MilestoneManager milestoneManager;
+    [SerializeField] private Transform employeeSpawnPoint;
     // Prefabs
+    [Header("Prefabs")]
+    [Header("Structures")]
     [SerializeField] private GameObject Floor;
-    
+    [Header("Employees")]
+    [SerializeField] private GameObject employee;
+
     private void Start() {
         objectPooler = ObjectPooler.Instance;
         buildingManager = BuildingManager.Instance;
+        milestoneManager = MilestoneManager.Instance;
     }
 
     public void PlaceFloor() {
@@ -36,7 +43,9 @@ public class ShopManager : MonoBehaviour {
         UiManager.Instance.CloseMainWindow();
     }
 
-    public void HireEmployee() {
-        objectPooler.SpawnFromPool("Employee", new Vector3(0, 0, 0), Quaternion.identity);
+    public void HireDeveloper() {
+        // Insted of "Employee" it should be for example: Developer, Artist, Designer, etc.
+        objectPooler.SpawnFromPool("Developer", employeeSpawnPoint.position, Quaternion.identity);
+        milestoneManager.CheckMilestone();
     }
 }

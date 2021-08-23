@@ -21,43 +21,52 @@ public class MilestoneManager : MonoBehaviour {
         }
     #endregion
 
-    private void UpgradeMilestone() {
+    private Player player;
+    private UiManager uiManager;
+
+    private void Start() {
+        player = Player.Instance;
+        uiManager = UiManager.Instance;
+    }
+
+    public void CheckMilestone() {
+        Debug.Log("Player team size is: " + player.GetTeamSize().ToString());
         // Call method when the player hires someone
-        switch (Player.Instance.GetCurrentMilestone()) {
+        switch (player.GetCurrentMilestone()) {
             case "Planning": 
-                //if (/*Condition*/) {
-                    UiManager.Instance.ShowMilestonePanel();
-                    Player.Instance.SetCurrentMilestone("Pre Production");
-                //}
+                if (player.GetTeamSize() == 2) {
+                    uiManager.ShowMilestonePanel();
+                    player.SetCurrentMilestone("Pre Production");
+                }
             break;
             case "Pre Production": 
                 //if (/*Condition*/) {
-                    UiManager.Instance.ShowMilestonePanel();
-                    Player.Instance.SetCurrentMilestone("Production");
+                    uiManager.ShowMilestonePanel();
+                    player.SetCurrentMilestone("Production");
                 //}
             break;
             case "Production": 
                 //if (/*Condition*/) {
-                    UiManager.Instance.ShowMilestonePanel();
-                    Player.Instance.SetCurrentMilestone("Testing");
+                    uiManager.ShowMilestonePanel();
+                    player.SetCurrentMilestone("Testing");
                 //}
             break;
             case "Testing": 
                 //if (/*Condition*/) {
-                    UiManager.Instance.ShowMilestonePanel();
-                    Player.Instance.SetCurrentMilestone("Pre Launch");
+                    uiManager.ShowMilestonePanel();
+                    player.SetCurrentMilestone("Pre Launch");
                 //}
             break;
             case "Pre Launch": 
                 //if (/*Condition*/) {
-                    UiManager.Instance.ShowMilestonePanel();
-                    Player.Instance.SetCurrentMilestone("Launch");
+                    uiManager.ShowMilestonePanel();
+                    player.SetCurrentMilestone("Launch");
                 //}
             break;
             case "Launch": 
                 //if (/*Condition*/) {
-                    UiManager.Instance.ShowMilestonePanel();
-                    Player.Instance.SetCurrentMilestone("Post Production");
+                    uiManager.ShowMilestonePanel();
+                    player.SetCurrentMilestone("Post Production");
                 //}
             break;
         }

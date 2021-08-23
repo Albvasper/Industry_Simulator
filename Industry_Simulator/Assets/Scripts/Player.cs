@@ -119,6 +119,10 @@ public class Player : MonoBehaviour {
         currentMilestone = newMilestone;
     }
 
+    public void AddTimeSize() {
+        team++;
+    }
+
     public int GetTeamSize() {
         return team;
     }

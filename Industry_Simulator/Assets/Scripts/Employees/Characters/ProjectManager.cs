@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectManager : Employee {
+public class ProjectManager : Character {
 
     #region Singleton Pattern
         private static ProjectManager instance;
@@ -21,9 +21,12 @@ public class ProjectManager : Employee {
         }
     #endregion
     
+    private GameManager gameManager;
+    private bool onDeskFirstTime = false;
     private bool onDesk = false;
 
     protected override void Start() {
+        gameManager = GameManager.Instance;
         base.Start();
     }
     
@@ -36,6 +39,10 @@ public class ProjectManager : Employee {
     }
 
     public void SitOnDesk() {
+        if (onDeskFirstTime == false) {
+            gameManager.InitProjectCreation();
+            onDeskFirstTime = true;
+        }
         UiManager.Instance.ShowHUD();
         onDesk = true;
     }

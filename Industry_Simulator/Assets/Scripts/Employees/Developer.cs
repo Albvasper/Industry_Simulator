@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character : Employee  {
-
-    protected Queue<string> dialogs = new Queue<string>();
+public class Developer : Employee {
 
     protected override void Start() {
         base.Start();

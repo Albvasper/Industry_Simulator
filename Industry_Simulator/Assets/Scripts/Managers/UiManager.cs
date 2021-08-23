@@ -31,11 +31,17 @@ public class UiManager : MonoBehaviour {
     [SerializeField] private Text dateText;
     [SerializeField] private Text teamSizeText;
     [SerializeField] private Button buildButton;
+    [SerializeField] private GameObject dialogBox;
+    [SerializeField] private Text dialogBoxNameText;
+    [SerializeField] private Text dialogBoxMsgText;
+
     // Main Window Panel
     [Header("Main Window Panel")]
     [SerializeField] private GameObject mainWindow;
+    [SerializeField] private Button closeWindowButton;
     // Building system UI
     [Header("Building system UI")]
+    [SerializeField] private Button buildTabButton;
     [SerializeField] private GameObject buildPanel;
     [SerializeField] private GameObject mainBuildCategory1Panel;
     [SerializeField] private GameObject buildCategory1Panel;
@@ -43,6 +49,7 @@ public class UiManager : MonoBehaviour {
     [SerializeField] private GameObject buildCategory3Panel;
     // Project Info panel
     [Header("Project Info panel")]
+    [SerializeField] private Button projectTabButton;
     [SerializeField] private GameObject projectInfoPanel;
     // Milestone panel
     [Header("Milestone panel")]
@@ -51,6 +58,7 @@ public class UiManager : MonoBehaviour {
     [SerializeField] private GameObject milestoneMangementScreen;
     // Team panel
     [Header("Team panel")]
+    [SerializeField] private Button teamTabButton;
     [SerializeField] private GameObject teamPanel;
     [SerializeField] private GameObject teamMainPanel;
     [SerializeField] private GameObject teamDesignPanel;
@@ -60,9 +68,18 @@ public class UiManager : MonoBehaviour {
     [SerializeField] private GameObject teamQAPanel;
     // WorkOS Panel
     [Header("WorkOS panel")]
+    [SerializeField] private Button workOsTabButton;
     [SerializeField] private GameObject workOSPanel;
     [SerializeField] private GameObject workOSinboxPanel;
     [SerializeField] private GameObject workOSprojectsPanel;
+    [SerializeField] private GameObject workOSBossInboxPanel;
+    [SerializeField] private GameObject workOSTeamInboxPanel;
+    [SerializeField] private Button inboxButton;
+    [SerializeField] private Button projectsButton;
+    [SerializeField] private Button bossInboxButton;
+    [SerializeField] private Button teamInboxButton;
+    [SerializeField] private Text teamMsg1;
+    [SerializeField] private Button sendTeaMsgButton;
 
     private void Start() {
         HideHUD();
@@ -107,6 +124,10 @@ public class UiManager : MonoBehaviour {
         teamArtPanel.SetActive(false);
         teamMarketingPanel.SetActive(false);
         teamQAPanel.SetActive(false);
+    }
+
+    public void CloseTeamPanel() {
+        teamPanel.SetActive(false);
     }
 
     public void ShowTeamDevPanel() {
@@ -167,6 +188,18 @@ public class UiManager : MonoBehaviour {
     public void ShowInboxPanel() {
         workOSprojectsPanel.SetActive(false);
         workOSinboxPanel.SetActive(true);
+        workOSBossInboxPanel.SetActive(false);
+        workOSTeamInboxPanel.SetActive(false);
+    }
+
+    public void ShowBossInboxPanel() {
+        workOSBossInboxPanel.SetActive(true);
+        workOSTeamInboxPanel.SetActive(false);
+    }
+
+    public void ShowTeamInboxPanel() {
+        workOSBossInboxPanel.SetActive(false);
+        workOSTeamInboxPanel.SetActive(true);
     }
 
     public void ShowProjectsPanel() {
@@ -219,6 +252,47 @@ public class UiManager : MonoBehaviour {
         milestoneMangementScreen.SetActive(true);
     }
 
+    public void WriteMessageToTeam() {
+        HideMilestonePanel();
+        CloseTeamPanel();
+        ShowWorkOSPanel();
+        ShowInboxPanel();
+        ShowTeamInboxPanel();
+        projectTabButton.interactable = false;
+        teamTabButton.interactable = false;
+        workOsTabButton.interactable = false;
+        buildTabButton.interactable = false;
+        inboxButton.interactable = false;
+        projectsButton.interactable = false;
+        bossInboxButton.interactable = false;
+        teamInboxButton.interactable = false;
+        closeWindowButton.interactable = false;
+        GameManager.Instance.StartTypingMsg();
+        sendTeaMsgButton.interactable = false;
+    }
+
+    public void SendMessageToTeam() {
+        GameManager.Instance.StopTypingMsg();
+        projectTabButton.interactable = true;
+        teamTabButton.interactable = true;
+        workOsTabButton.interactable = true;
+        buildTabButton.interactable = true;
+        inboxButton.interactable = true;
+        projectsButton.interactable = true;
+        bossInboxButton.interactable = true;
+        teamInboxButton.interactable = true;
+        closeWindowButton.interactable = true;
+        milestonePanel.SetActive(false);
+    }
+
+    public Text GetTeamMsgText() {
+        return teamMsg1;
+    }
+
+    public Button GetSendMsgButton() {
+        return sendTeaMsgButton;
+    }
+
     public void HideMilestonePanel() {
         milestonePanel.SetActive(false);
     }
@@ -231,4 +305,19 @@ public class UiManager : MonoBehaviour {
         hudPanel.SetActive(false);
     }
 
+    public void ShowDialogBox() {
+        dialogBox.SetActive(true);
+    }
+
+    public void HideDialogBox() {
+        dialogBox.SetActive(false);
+    }
+
+    public Text GetDialogBoxNameText() {
+        return dialogBoxNameText;
+    }
+
+    public Text GetDialogBoxMsgText() {
+        return dialogBoxMsgText;
+    }
 }
