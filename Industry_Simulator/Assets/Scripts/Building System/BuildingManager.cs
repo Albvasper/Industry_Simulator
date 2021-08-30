@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BuildingManager : MonoBehaviour {
 
@@ -29,6 +30,7 @@ public class BuildingManager : MonoBehaviour {
     private bool initBuilding;
     private bool building;
     private int prefabLayer;
+    [SerializeField] private NavMeshSurface navMeshSurface;
 
     private void Start() {
         placeableObj = null;
@@ -37,7 +39,7 @@ public class BuildingManager : MonoBehaviour {
         building = false;
         objectPooler = ObjectPooler.Instance;
     }
-
+    
     private void Update() {
         BuildStructure();
     }
@@ -84,6 +86,7 @@ public class BuildingManager : MonoBehaviour {
             placeableObj = null;
             building = true;
             // Quit building mode
+            navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
             initBuilding = false;
         }
     }

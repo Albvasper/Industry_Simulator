@@ -24,6 +24,8 @@ public class UiManager : MonoBehaviour {
     
     private Player player;
     private ShopManager shopManager;
+    private CamController camController;
+    private Camera mainCam;
     // HUD
     [Header("HUD")]
     [SerializeField] private GameObject hudPanel;
@@ -80,8 +82,10 @@ public class UiManager : MonoBehaviour {
     [SerializeField] private Button sendTeaMsgButton;
 
     private void Start() {
+        mainCam = Camera.main;
         player = Player.Instance;
         shopManager = ShopManager.Instance;
+        camController = CamController.Instance;
     }
 
     private void Update() {
@@ -213,6 +217,9 @@ public class UiManager : MonoBehaviour {
     public void CloseBuildPanel() {
         buildPanel.SetActive(false);
         ShowHUD();
+        if (mainCam.orthographic == true) {
+            camController.ToggleCamViewToPerspective();
+        }
     }
     
     public void ExpandBuildMenu() {

@@ -30,7 +30,7 @@ public class CamController : MonoBehaviour {
     private Vector3 cameraOffset;
     private float camVel = 0.5f;
     private int zoomBounds = 5;
-    private float zoomRate = 4.0f;
+    private float zoomRate = 5.0f;
     private Vector2 mousePos = Vector2.zero;
 
     private void Start() {
@@ -76,7 +76,11 @@ public class CamController : MonoBehaviour {
                 // Camera zoom in 
                 if (Input.GetAxis("Mouse ScrollWheel") > 0f) {
                     if (zoomBounds > 1) {
-                        mainCam.fieldOfView -= 5;
+                        if (mainCam.orthographic == true) {
+                            mainCam.orthographicSize -= zoomRate;
+                        } else {
+                            mainCam.fieldOfView -= zoomRate;
+                        }
                         //mainCam.transform.position += new Vector3(0, zoomRate, -zoomRate);
                         zoomBounds--;
                     } 
@@ -84,7 +88,11 @@ public class CamController : MonoBehaviour {
                 else if (Input.GetAxis("Mouse ScrollWheel") < 0f) {
                     // Camera zoom out
                     if (zoomBounds < 14) {
-                        mainCam.fieldOfView += 5;
+                        if (mainCam.orthographic == true) {
+                            mainCam.orthographicSize += zoomRate;
+                        } else {
+                            mainCam.fieldOfView += zoomRate;
+                        }
                         //mainCam.transform.position += new Vector3(0, -zoomRate, zoomRate);
                         zoomBounds++;
                     } 
@@ -118,5 +126,23 @@ public class CamController : MonoBehaviour {
                 mainCam.transform.position += new Vector3(camVel, 0, 0);
             break;
         }
+    }
+
+    public void ToggleCamView() {
+        if (mainCam.orthographic == false) {
+            ToggleCamViewToOrthographic();
+        } else {
+            ToggleCamViewToPerspective();
+        }
+    }
+
+    public void ToggleCamViewToOrthographic() {
+        mainCam.orthographic = true;
+        mainCam.transform.Rotate(45, 0, 0);
+    }
+
+    public void ToggleCamViewToPerspective() {
+        mainCam.orthographic = false;
+        mainCam.transform.Rotate(-45, 0, 0);
     }
 }
