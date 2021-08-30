@@ -22,6 +22,7 @@ public class GameProject : MonoBehaviour {
         }
     #endregion
     
+    private Player player;
     private string projectName = "";
     private string tags = "";
     private string platform = "";
@@ -39,14 +40,17 @@ public class GameProject : MonoBehaviour {
     [SerializeField] private Button threeDGraphicsButton;
 
     private void Start() {
+        player = Player.Instance;
         gameStudioNameText.text = Player.Instance.GetGameStudioName();
     }
 
     public void InitProjectCreation() {
+        player.DisableMovement();
         createProjectPanel.SetActive(true);
     }
 
     public void SaveProjectInfo() {
+        player.EnableMovement();
         if (projectName == "" || tags == ""|| platform == "" || artStyle == "" || description == "" || graphics == "") {
             // Deny saving data until every field is filled
             Debug.Log("No!");

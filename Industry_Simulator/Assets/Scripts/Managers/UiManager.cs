@@ -21,7 +21,9 @@ public class UiManager : MonoBehaviour {
             }
         }
     #endregion
-
+    
+    private Player player;
+    private ShopManager shopManager;
     // HUD
     [Header("HUD")]
     [SerializeField] private GameObject hudPanel;
@@ -34,19 +36,15 @@ public class UiManager : MonoBehaviour {
     [SerializeField] private GameObject dialogBox;
     [SerializeField] private Text dialogBoxNameText;
     [SerializeField] private Text dialogBoxMsgText;
-
     // Main Window Panel
     [Header("Main Window Panel")]
     [SerializeField] private GameObject mainWindow;
     [SerializeField] private Button closeWindowButton;
     // Building system UI
     [Header("Building system UI")]
-    [SerializeField] private Button buildTabButton;
     [SerializeField] private GameObject buildPanel;
-    [SerializeField] private GameObject mainBuildCategory1Panel;
-    [SerializeField] private GameObject buildCategory1Panel;
-    [SerializeField] private GameObject buildCategory2Panel;
-    [SerializeField] private GameObject buildCategory3Panel;
+    [SerializeField] private GameObject buildCategoryPanel;
+    [SerializeField] private List<GameObject> buildPanels = new List<GameObject>();
     // Project Info panel
     [Header("Project Info panel")]
     [SerializeField] private Button projectTabButton;
@@ -82,7 +80,8 @@ public class UiManager : MonoBehaviour {
     [SerializeField] private Button sendTeaMsgButton;
 
     private void Start() {
-        HideHUD();
+        player = Player.Instance;
+        shopManager = ShopManager.Instance;
     }
 
     private void Update() {
@@ -95,6 +94,7 @@ public class UiManager : MonoBehaviour {
     }
 
     public void ShowMainWindow() {
+        player.DisableMovement();
         mainWindow.SetActive(true);
         HideHUD();
     }
@@ -109,7 +109,6 @@ public class UiManager : MonoBehaviour {
         projectInfoPanel.SetActive(true);
         teamPanel.SetActive(false);
         workOSPanel.SetActive(false);
-        buildPanel.SetActive(false);
     }
 
     public void ShowTeamPanel() {
@@ -117,7 +116,6 @@ public class UiManager : MonoBehaviour {
         projectInfoPanel.SetActive(false);
         teamPanel.SetActive(true);
         workOSPanel.SetActive(false);
-        buildPanel.SetActive(false);
         teamMainPanel.SetActive(true);
         teamDevPanel.SetActive(false);
         teamDesignPanel.SetActive(false);
@@ -180,7 +178,6 @@ public class UiManager : MonoBehaviour {
         projectInfoPanel.SetActive(false);
         teamPanel.SetActive(false);
         workOSPanel.SetActive(true);
-        buildPanel.SetActive(false);
         workOSprojectsPanel.SetActive(false);
         workOSinboxPanel.SetActive(false);
     }
@@ -208,36 +205,33 @@ public class UiManager : MonoBehaviour {
     }
 
     public void ShowBuildPanel() {
-        ShowMainWindow();
-        projectInfoPanel.SetActive(false);
-        teamPanel.SetActive(false);
-        workOSPanel.SetActive(false);
+        HideHUD();
         buildPanel.SetActive(true);
-        mainBuildCategory1Panel.SetActive(true);
-        buildCategory1Panel.SetActive(false);
-        buildCategory2Panel.SetActive(false);
-        buildCategory3Panel.SetActive(false);
+        RetractBuildMenu();
     }
 
-    public void ShowBuildPanel1() {
-        mainBuildCategory1Panel.SetActive(false);
-        buildCategory1Panel.SetActive(true);
-        buildCategory2Panel.SetActive(false);
-        buildCategory3Panel.SetActive(false);
+    public void CloseBuildPanel() {
+        buildPanel.SetActive(false);
+        ShowHUD();
+    }
+    
+    public void ExpandBuildMenu() {
+        buildCategoryPanel.SetActive(true);
     }
 
-    public void ShowBuildPanel2() {
-        mainBuildCategory1Panel.SetActive(false);
-        buildCategory1Panel.SetActive(false);
-        buildCategory2Panel.SetActive(true);
-        buildCategory3Panel.SetActive(false);
+    public void RetractBuildMenu() {
+        buildCategoryPanel.SetActive(false);
     }
 
-    public void ShowBuildPanel3() {
-        mainBuildCategory1Panel.SetActive(false);
-        buildCategory1Panel.SetActive(false);
-        buildCategory2Panel.SetActive(false);
-        buildCategory3Panel.SetActive(true);
+    public void ShowBuildCategory(GameObject activePanel) {
+        ExpandBuildMenu();
+        foreach (GameObject buildPanel in buildPanels) {
+            if (activePanel == buildPanel) {
+                activePanel.SetActive(true);
+            } else {
+                buildPanel.SetActive(false);
+            }
+        }
     }
 
     public void ShowMilestonePanel() {
@@ -261,7 +255,6 @@ public class UiManager : MonoBehaviour {
         projectTabButton.interactable = false;
         teamTabButton.interactable = false;
         workOsTabButton.interactable = false;
-        buildTabButton.interactable = false;
         inboxButton.interactable = false;
         projectsButton.interactable = false;
         bossInboxButton.interactable = false;
@@ -276,7 +269,6 @@ public class UiManager : MonoBehaviour {
         projectTabButton.interactable = true;
         teamTabButton.interactable = true;
         workOsTabButton.interactable = true;
-        buildTabButton.interactable = true;
         inboxButton.interactable = true;
         projectsButton.interactable = true;
         bossInboxButton.interactable = true;
@@ -310,6 +302,7 @@ public class UiManager : MonoBehaviour {
     }
 
     public void HideDialogBox() {
+        player.EnableMovement();
         dialogBox.SetActive(false);
     }
 

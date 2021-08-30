@@ -40,7 +40,6 @@ public class ShopManager : MonoBehaviour {
 
     public void PlaceFloor() {
         buildingManager.InitBuilding(Floor);
-        UiManager.Instance.CloseMainWindow();
     }
 
     public void HireDeveloper() {

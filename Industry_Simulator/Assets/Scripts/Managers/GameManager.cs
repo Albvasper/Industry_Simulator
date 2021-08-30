@@ -20,8 +20,9 @@ public class GameManager : MonoBehaviour {
             }
         }
     #endregion
-
+    
     // Managers
+    private Player player;
     private UiManager uiManager;
     private GameProject gameProject;
     // Date
@@ -30,9 +31,11 @@ public class GameManager : MonoBehaviour {
     // Messages to player
     private bool currentlyTyping = false;
     private Queue<string> msg1Content = new Queue<string>();
-    public Receptionist receptionist;
+    // Characters
+    [SerializeField] private Receptionist receptionist;
 
     private void Start() {
+        player = Player.Instance;
         uiManager = UiManager.Instance;
         gameProject = GameProject.Instance;
         #region msg1 content
@@ -107,6 +110,7 @@ public class GameManager : MonoBehaviour {
             msg1Content.Enqueue("in");
             msg1Content.Enqueue("t.");
         #endregion
+        uiManager.HideHUD();
     }
 
     private void Update() {
@@ -115,10 +119,6 @@ public class GameManager : MonoBehaviour {
         // if (/*Timing for first msg*/) {
                 // Fill the text component with string
         // }
-
-        if (Input.GetKeyDown(KeyCode.L)) {
-            receptionist.Talk();
-        }
 
         // Typing message to team after a milestone is achieved
         if (currentlyTyping == true && Input.anyKeyDown) {
@@ -130,25 +130,35 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    // Cutscenes
+    // Cutscenes -----------------------------------------------
     public void InitProjectCreation() {
+        player.DisableMovement();
         // Maybe wait some secs
         gameProject.InitProjectCreation();
     }
 
-    // Dialog
+    public void WelcomeIntro() {
+       receptionist.Talk();
+       // Wait secs?
+       receptionist.WalkToProjectManagerDesk();
+    }
+
+    // Dialog -----------------------------------------------
     public void InitDialog(string characterName, string dialog) {
+        player.DisableMovement();
         uiManager.ShowDialogBox();
         uiManager.GetDialogBoxNameText().text = characterName;
         uiManager.GetDialogBoxMsgText().text = dialog;
     }
 
-    // Messages
+    // Messages -----------------------------------------------
     public void StartTypingMsg() {
+        player.DisableMovement();
         currentlyTyping = true;
     }
 
     public void StopTypingMsg() {
+        player.EnableMovement();
         currentlyTyping = false;
     }
 }
